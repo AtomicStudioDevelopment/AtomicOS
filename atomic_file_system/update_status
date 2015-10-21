@@ -1,0 +1,15 @@
+/*
+ * atomic_fs.h
+ *
+ *  Created on: 21 ott 2015
+ *      Author: Atomic Studio Development
+ *  
+ *    TODO ------------->
+ *    - add riferiments to other file
+ *    - create file for mount file_system
+ *    - create file manage_resource
+ *
+ *    STATUS ----------->
+ *    - scritto il file header della dichirazione e inizializzazione dei parametri del file system
+ *
+ */
