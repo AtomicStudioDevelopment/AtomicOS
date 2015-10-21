@@ -481,7 +481,7 @@ struct atomic_fs_extent {
 #define file_is_encrypt(i_advise)      	((i_advise) & FADVISE_ENCRYPT_BIT)
 
 
-struct f2fs_inode {
+struct atomic_fs_inode {
 	__le16 i_mode;			/*tipo file*/
 	__u8 i_advise;			/* file hints */
 	__u8 i_inline;			/* inline flag */
@@ -505,7 +505,7 @@ struct f2fs_inode {
 	__u8 i_name[ATOMIC_FS_NAME_LEN];	/* file name for SPOR */
 	__u8 i_dir_level;		/* valore più grande per le directory più grosse*/
 
-	struct f2fs_extent i_ext;	/* serve a memorizzare qualcosa di più grosso */
+	struct atomic_fs_extent i_ext;	/* serve a memorizzare qualcosa di più grosso */
 
 	__le32 i_addr[DEF_ADDR_PER_INODE];	/* Pointers to data blocks */
 
@@ -540,10 +540,10 @@ struct node_footer {
 	__le32 next_blkaddr;	/* il prossimo nodo alla struttura di blocchi */
 } __attribute__((packed));
 
-struct f2fs_node {
+struct atomic_fs_node {
 	/* Puo essere di 3 tipi:diretto indiretto inode--->collegamento*/
 	union {
-		struct f2fs_inode i;
+		struct atomic_fs_inode i;
 		struct direct_node dn;
 		struct indirect_node in;
 	};
@@ -553,16 +553,16 @@ struct f2fs_node {
 /*
  * Per le entrate NAT
  */
-#define NAT_ENTRY_PER_BLOCK (PAGE_CACHE_SIZE / sizeof(struct f2fs_nat_entry))
+#define NAT_ENTRY_PER_BLOCK (PAGE_CACHE_SIZE / sizeof(struct atomic_fs_nat_entry))
 
-struct f2fs_nat_entry {
+struct atomic_fs_nat_entry {
 	__u8 version;		/* l'ultimo indirizzo che è entrato  */
 	__le32 ino;		/* numero dell'inode */
 	__le32 block_addr;	/* indirizzo del blocco */
 } __attribute__((packed));
 
-struct f2fs_nat_block {
-	struct f2fs_nat_entry entries[NAT_ENTRY_PER_BLOCK];
+struct atomic_fs_nat_block {
+	struct atomic_fs_nat_entry entries[NAT_ENTRY_PER_BLOCK];
 } __attribute__((packed));
 
 
@@ -590,14 +590,14 @@ struct f2fs_nat_block {
 	((le16_to_cpu((raw_sit)->vblocks) & ~SIT_VBLOCKS_MASK)	\
 	 >> SIT_VBLOCKS_SHIFT)
 
-struct f2fs_sit_entry {
+struct atomic_fs_sit_entry {
 	__le16 vblocks;				/* reference above */
 	__u8 valid_map[SIT_VBLOCK_MAP_SIZE];	/* bitmap for valid blocks */
 	__le64 mtime;				/* segment age for cleaning */
 } __attribute__((packed));
 
-struct f2fs_sit_block {
-	struct f2fs_sit_entry entries[SIT_ENTRY_PER_BLOCK];
+struct atomic_fs_sit_block {
+	struct atomic_fs_sit_entry entries[SIT_ENTRY_PER_BLOCK];
 } __attribute__((packed));
 
 /*
@@ -621,7 +621,7 @@ struct f2fs_sit_block {
 #define SUM_ENTRIES_SIZE	(SUMMARY_SIZE * ENTRIES_IN_SUM)
 
 /* a summary entry for a 4KB-sized block in a segment */
-struct f2fs_summary {
+struct atomic_fs_summary {
 	__le32 nid;		/* parent node id */
 	union {
 		__u8 reserved[3];
@@ -662,7 +662,7 @@ enum {
 
 struct nat_journal_entry {
 	__le32 nid;
-	struct f2fs_nat_entry ne;
+	struct atomic_fs_nat_entry ne;
 } __attribute__((packed));
 
 struct nat_journal {
@@ -672,7 +672,7 @@ struct nat_journal {
 
 struct sit_journal_entry {
 	__le32 segno;
-	struct f2fs_sit_entry se;
+	struct atomic_fs_sit_entry se;
 } __attribute__((packed));
 
 struct sit_journal {
@@ -681,8 +681,8 @@ struct sit_journal {
 } __attribute__((packed));
 
 /* 4KB-sized summary block structure */
-struct f2fs_summary_block {
-	struct f2fs_summary entries[ENTRIES_IN_SUM];
+struct atomic_fs_summary_block {
+	struct atomic_fs_summary entries[ENTRIES_IN_SUM];
 	union {
 		__le16 n_nats;
 		__le16 n_sits;
@@ -725,7 +725,7 @@ typedef __le32	f2fs_hash_t;
 				NR_DENTRY_IN_BLOCK + SIZE_OF_DENTRY_BITMAP))
 
 /*  */
-struct f2fs_dir_entry {
+struct atomic_fs_dir_entry {
 	__le32 hash_code;	/* hash code */
 	__le32 ino;		/* numero inode */
 	__le16 name_len;	/* lunghezza del file name */
@@ -733,11 +733,11 @@ struct f2fs_dir_entry {
 } __attribute__((packed));
 
 /*  */
-struct f2fs_dentry_block {
+struct atomic_fs_dentry_block {
 	/*  */
 	__u8 dentry_bitmap[SIZE_OF_DENTRY_BITMAP];
 	__u8 reserved[SIZE_OF_RESERVED];
-	struct f2fs_dir_entry dentry[NR_DENTRY_IN_BLOCK];
+	struct atomic_fs_dir_entry dentry[NR_DENTRY_IN_BLOCK];
 	__u8 filename[NR_DENTRY_IN_BLOCK][ATOMIC_FS_SLOT_LEN];
 } __attribute__((packed));
 
@@ -752,10 +752,10 @@ struct f2fs_dentry_block {
 				NR_INLINE_DENTRY + INLINE_DENTRY_BITMAP_SIZE))
 
 /*  */
-struct f2fs_inline_dentry {
+struct atomic_fs_inline_dentry {
 	__u8 dentry_bitmap[INLINE_DENTRY_BITMAP_SIZE];
 	__u8 reserved[INLINE_RESERVED_SIZE];
-	struct f2fs_dir_entry dentry[NR_INLINE_DENTRY];
+	struct atomic_fs_dir_entry dentry[NR_INLINE_DENTRY];
 	__u8 filename[NR_INLINE_DENTRY][ATOMIC_FS_SLOT_LEN];
 } __packed;
 
@@ -799,10 +799,10 @@ extern unsigned long find_next_bit(const unsigned long *,
 extern u_int32_t atomic_fs_cal_crc32(u_int32_t, void *, int);
 extern int atomic_fs_crc_valid(u_int32_t blk_crc, void *buf, int len);
 
-extern void atomic_fs_init_configuration(struct f2fs_configuration *);
-extern int atomic_fs_dev_is_umounted(struct f2fs_configuration *);
-extern int atomic_fs_get_device_info(struct f2fs_configuration *);
-extern void atomic_fs_finalize_device(struct f2fs_configuration *);
+extern void atomic_fs_init_configuration(struct atomic_fs_config *);
+extern int atomic_fs_dev_is_umounted(struct atomic_fs_config *);
+extern int atomic_fs_get_device_info(struct atomic_fs_config *);
+extern void atomic_fs_finalize_device(struct atomic_fs_config *);
 
 extern int dev_read(void *, __u64, size_t);
 extern int dev_write(void *, __u64, size_t);
@@ -819,7 +819,7 @@ extern int dev_read_version(void *, __u64, size_t);
 extern void get_kernel_version(__u8 *);
 f2fs_hash_t atomic_fs_dentry_hash(const unsigned char *, int);
 
-extern struct f2fs_configuration config;
+extern struct atomic_fs_config config;
 
 #define ALIGN(val, size)	((val) + (size) - 1) / (size)
 #define SEG_ALIGN(blks)		ALIGN(blks, config.blks_per_seg)
