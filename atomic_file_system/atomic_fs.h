@@ -2,7 +2,9 @@
  * atomic_fs.h
  *
  *  Created on: 21 ott 2015
- *      Author: Atomic Studio Development
+ *      Author: Atomic Studio Development 
+ *	Ringraziamenti: Samsung Electronics 
+ *	Altri riferimenti: linux kernel
  *      
  *      
  */
