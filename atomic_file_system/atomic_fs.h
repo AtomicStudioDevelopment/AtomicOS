@@ -38,7 +38,9 @@ typedef u32				nid_t;
 typedef u8				bool;
 typedef unsigned long 	pgoff_t;
 
-
+#if HAVE_BYTESWAP_H
+#include <byteswap.h>
+#else
 /*Inclusione della libreria byteswap.h che dato un valore lo converte in un 16 bit.....Esempio:4 bit che contengono 1024 facendo uno swap si puo mettere in soli 2*/
 
 
