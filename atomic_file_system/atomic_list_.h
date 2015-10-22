@@ -37,8 +37,8 @@ La macro assegna alla struttura list_head la macro che passa l'indirizzo di memo
 /* Inizio della lista per le directory*/
 static inline void ATOMIC__FS_INIT_LIST_HEAD(struct list_head *list)
 {
-        list->next=list;
-        list->prev=list;
+            list->next=list;
+            list->prev=list;
 }
 
 static inline void __list_add(struct list_head *new,struct list_head*prev,struct list_head *next)
