@@ -35,7 +35,7 @@ La macro assegna alla struttura list_head la macro che passa l'indirizzo di memo
 #define LIST_HEAD                   (name)                          \
                                     struct list_head=ATOMIC_FS_LIST_HEAD_INIT(name)
 /* Inizio della lista per le directory*/
-static inline void ATOMIC__FS_INITLIST_HEAD(struct list_head *list)
+static inline void ATOMIC__FS_INIT_LIST_HEAD(struct list_head *list)
 {
         list->next=list;
         list->prev=list;
