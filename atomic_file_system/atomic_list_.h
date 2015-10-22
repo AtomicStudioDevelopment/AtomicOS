@@ -20,7 +20,7 @@ La macro offsetof attraverso la costante seze_t fa AND bit a bit del membro
                     (type*)((char*)__mptr-offsetof(type,member));})
                     
                     
-/* Dichiarazione di una struttura base per il sistema operativo*/
+/* Dichiarazione di una struttura base per lo spostamento*/
 struct list_head
 {
     struct list_head *next,*prev;
