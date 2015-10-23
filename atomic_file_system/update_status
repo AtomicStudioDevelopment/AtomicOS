@@ -4,12 +4,15 @@
  *  Created on: 21 ott 2015
  *      Author: Atomic Studio Development
  *  
- *    TODO ------------->
- *    - add riferiments to other file
- *    - create file for mount file_system
- *    - create file manage_resource
+ *    TODO ------------->++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ *    - finire atomic_fs__.h per compeltare le funzioni di bitshift                                 +
+ *    - creare cartella fsck per mettere le operazioni sul device                                   +
+ *    - creare cartella tool per supporto alla gestione                                             +
+ *    - creare cartella lib dove ci mettiamo tutte le lib                                           +
+ *    - creare mkfs ---> come funzione---> si potrebbe aggiungere anche in tool ma meglio staccata  + 
+ *    - gli script per compilare la prima beta                                                      +
+ *    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
- *    STATUS ----------->
- *    - scritto il file header della dichirazione e inizializzazione dei parametri del file system
+ *    
  *
  */
